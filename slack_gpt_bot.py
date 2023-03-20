@@ -55,7 +55,12 @@ def command_handler(body, say, context):
         thread_ts = body['event']['thread_ts']
     else:
         thread_ts = body['event']['ts']
-    say("Got your request. Please wait.", thread_ts=thread_ts)
+    app.client.reactions_add(
+        token=SLACK_BOT_TOKEN,
+        channel=body['event']['channel'],
+        name="eyes",
+        timestamp=thread_ts,
+    )
     user_message = body['event']['text']
     print(f'user_message: {user_message}')
     try:
