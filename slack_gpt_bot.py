@@ -51,15 +51,17 @@ conversations = {}
 
 @app.event("app_mention")
 def command_handler(body, say, context):
+    event_ts = body['event']['ts']
     if body['event'].get('thread_ts'):
         thread_ts = body['event']['thread_ts']
     else:
         thread_ts = body['event']['ts']
+    
     app.client.reactions_add(
         token=SLACK_BOT_TOKEN,
         channel=body['event']['channel'],
         name="eyes",
-        timestamp=thread_ts,
+        timestamp=event_ts,  # Change this line
     )
     user_message = body['event']['text']
     print(f'user_message: {user_message}')
